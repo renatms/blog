@@ -16,15 +16,6 @@ use yii\web\Controller;
 
 class AuthController extends Controller
 {
-    function d($value = null, $die = 1)
-    {
-        echo 'Debug: <br /><pre>';
-        print_r($value);
-        echo '</pre>';
-
-        if ($die) die;
-    }
-
     /**
      * Login action.
      *
@@ -59,6 +50,9 @@ class AuthController extends Controller
         return $this->goHome();
     }
 
+    /**
+     * @return string|\yii\web\Response
+     */
     public function actionSignup()
     {
         $model = new SignupForm();

@@ -30,16 +30,25 @@ class ImageUpload extends Model
         }
     }
 
+    /**
+     * @return string
+     */
     private function getFolder()
     {
         return Yii::getAlias('@app/web') . '/uploads/';
     }
 
+    /**
+     * @return string
+     */
     private function generateFilename()
     {
         return strtolower(md5(uniqid($this->image->baseName)) . '.' . $this->image->extension);
     }
 
+    /**
+     * @param $currentImage
+     */
     public function deleteCurrentImage($currentImage)
     {
         if ($this->fileExist($currentImage)) {
@@ -47,6 +56,10 @@ class ImageUpload extends Model
         }
     }
 
+    /**
+     * @param $currentImage
+     * @return bool
+     */
     public function fileExist($currentImage)
     {
         if (!empty($currentImage) && $currentImage !== null) {
@@ -55,6 +68,9 @@ class ImageUpload extends Model
 
     }
 
+    /**
+     * @return string
+     */
     public function saveImage()
     {
         $filename = $this->generateFilename();

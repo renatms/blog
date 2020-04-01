@@ -101,6 +101,10 @@ class ArticleController extends Controller
         ]);
     }
 
+    /**
+     * @param $id
+     * @return string|\yii\web\Response
+     */
     public function actionSetImage($id)
     {
         $model = new ImageUpload();
@@ -119,6 +123,10 @@ class ArticleController extends Controller
         ]);
     }
 
+    /**
+     * @param $id
+     * @return string|\yii\web\Response
+     */
     public function actionSetCategory($id)
     {
         $article = $this->findModel(($id));
@@ -140,6 +148,10 @@ class ArticleController extends Controller
         ]);
     }
 
+    /**
+     * @param $id
+     * @return string|\yii\web\Response
+     */
     public function actionSetTags($id)
     {
         $article = $this->findModel($id);

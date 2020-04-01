@@ -42,21 +42,34 @@ class Category extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getArticles()
     {
         return $this->hasMany(Article::className(), ['category_id' => 'id']);
     }
 
+    /**
+     * @return int|string
+     */
     public function getArticlesCount()
     {
         return $this->getArticles()->count();
     }
 
+    /**
+     * @return array|\yii\db\ActiveRecord[]
+     */
     public static function getall()
     {
         return Category::find()->all();
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public static function getArticlesByCategory($id)
     {
         $query = Article::find()->where(['category_id' => $id]);

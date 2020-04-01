@@ -67,12 +67,18 @@ class Article extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * @param $filename
+     */
     public function saveImage($filename)
     {
         $this->image = $filename;
         $this->save(false);
     }
 
+    /**
+     * @return string
+     */
     public function getImage()
     {
         return $this->image ? '/uploads/' . $this->image : '/no-image.png';
@@ -84,17 +90,27 @@ class Article extends \yii\db\ActiveRecord
         $imageUpLoadModel->deleteCurrentImage($this->image);
     }
 
+    /**
+     * @return bool
+     */
     public function beforeDelete()
     {
         $this->deleteImage();
         return parent::beforeDelete();
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getCategory()
     {
         return $this->hasOne(Category::className(), ['id' => 'category_id']);
     }
 
+    /**
+     * @param $category_id
+     * @return bool
+     */
     public function saveCategory($category_id)
     {
         $category = Category::findOne($category_id);
@@ -117,6 +133,9 @@ class Article extends \yii\db\ActiveRecord
         return ArrayHelper::getColumn($selectedTags, 'id');
     }
 
+    /**
+     * @param $tags
+     */
     public function saveTags($tags)
     {
         $this->clearCurrentTags();
@@ -129,16 +148,24 @@ class Article extends \yii\db\ActiveRecord
         }
     }
 
+
     public function clearCurrentTags()
     {
         ArticleTag::deleteAll(['article_id' => $this->id]);
     }
 
+    /**
+     * @return string
+     */
     public function getDate()
     {
         return Yii::$app->formatter->asDate($this->date);
     }
 
+    /**
+     * @param int $pageSize
+     * @return mixed
+     */
     public static function getAll($pageSize = 5)
     {
         $query = Article::find();
@@ -154,21 +181,61 @@ class Article extends \yii\db\ActiveRecord
         return $data;
     }
 
+    /**
+     * @return array|\yii\db\ActiveRecord[]
+     */
     public static function getPopular()
     {
         return Article::find()->orderBy('viewed desc')->limit(3)->all();
     }
 
+    /**
+     * @return array|\yii\db\ActiveRecord[]
+     */
     public static function getRecent()
     {
         return Article::find()->orderBy('date asc')->limit(4)->all();
     }
 
+    /**
+     * @return bool
+     */
     public function saveArticle()
     {
         $this->user_id = Yii::$app->user->id;
         return $this->save();
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getComments()
+    {
+        return $this->hasMany(Comment::className(), ['article_id' => 'id']);
+    }
 
+    /**
+     * @return array|\yii\db\ActiveRecord[]
+     */
+    public function getArticleComments()
+    {
+        return $this->getComments()->where(['status' => 1])->all();
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAuthor()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    /**
+     * @return bool
+     */
+    public function viewedCouner()
+    {
+        $this->viewed += 1;
+        return $this->save(false);
+    }
 }

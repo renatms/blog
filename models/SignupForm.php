@@ -21,6 +21,9 @@ class SignupForm extends Model
         ];
     }
 
+    /**
+     * @return bool
+     */
     public function signup()
     {
         if ($this->validate()) {
