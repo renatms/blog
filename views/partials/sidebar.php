@@ -20,7 +20,7 @@ use yii\helpers\Url;
                     </a>
 
                     <div class="p-content">
-                        <a href="#" class="text-uppercase"><?= $article->title ?></a>
+                        <a href="<?= Url::toRoute(['site/view','id'=>$article->id]);?>" class="text-uppercase"><?= $article->title ?></a>
                         <span class="p-date"><?= $article->getDate(); ?></span>
 
                     </div>
@@ -43,7 +43,7 @@ use yii\helpers\Url;
                             </a>
                         </div>
                         <div class="p-content">
-                            <a href="#" class="text-uppercase"><?= $article->title ?></a>
+                            <a href="<?= Url::toRoute(['site/view','id'=>$article->id]);?>" class="text-uppercase"><?= $article->title ?></a>
                             <span class="p-date"><?= $article->getDate(); ?></span>
                         </div>
                     </div>
